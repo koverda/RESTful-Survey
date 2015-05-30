@@ -1,15 +1,48 @@
 from django.db import models
+
+'''
 from pygments.lexers import get_all_lexers
 from pygments.styles import get_all_styles
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters.html import HtmlFormatter
 from pygments import highlight
+'''
 
+'''
 LEXERS = [item for item in get_all_lexers() if item[1]]
 LANGUAGE_CHOICES = sorted([(item[1][0], item[0]) for item in LEXERS])
 STYLE_CHOICES = sorted((item, item) for item in get_all_styles())
+'''
+
+RECOMMEND_CHOICES = (
+    ('1', '1 - Very Unlikely'),
+    ('2', '2'),
+    ('3', '3'),
+    ('4', '4'),
+    ('5', '5'),
+    ('6', '6'),
+    ('7', '7'),
+    ('8', '8'),
+    ('9', '9'),
+    ('10', '10 - Very Likely'),
+)
+
+class Survey(models.Model):
+    # date survey was taken
+    created = models.DateTimeField(auto_now_add=True)
+    # how likely are you to recommend this company to a friend?
+    recommend_company = models.CharField(max_length = 2, choices = RECOMMEND_CHOICES)
+    # what changes would you make to our product?
+    what_changes = models.CharField(max_length = 500, default = '')
+    # did yo uresearch the product before purchasing?
+    was_researched = models.BooleanField()
+    # optional field
+    feedback = models.CharField(max_length = 500, blank = True, default = '')
 
 
+    class Meta:
+        ordering = ('created',)
+'''
 class Snippet(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=100, blank=True, default='')
@@ -44,3 +77,4 @@ class Snippet(models.Model):
         snippets = Snippet.objects.all()
         if len(snippets) > 100:
             snippets[0].delete()
+'''
