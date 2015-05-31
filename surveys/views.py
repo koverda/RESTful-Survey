@@ -7,6 +7,16 @@ from rest_framework.response import Response
 from surveys.models import Survey
 from surveys.permissions import IsOwnerOrReadOnly
 from surveys.serializers import SurveySerializer, UserSerializer
+from django import forms # needed for radio button
+
+# radio button code for y/n question
+# usually better to have this in it's own forms.py file
+class BoolForm(forms.ModelForm):
+    class Meta:
+        model = Survey
+        widgets = {
+            'was_researched': forms.RadioSelect
+        }
 
 
 class SurveyViewSet(viewsets.ModelViewSet):

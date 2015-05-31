@@ -26,6 +26,8 @@ RECOMMEND_CHOICES = (
     ('9', '9'),
     ('10', '10 - Very Likely'),
 )
+BOOL_CHOICES = ((True, 'Yes'), (False, 'No'))
+
 
 class Survey(models.Model):
     # date survey was taken
@@ -37,7 +39,8 @@ class Survey(models.Model):
     what_changes = models.CharField('What would you change about the product?',
                                     max_length = 500, default = '')
     # did you research the product before purchasing?
-    was_researched = models.BooleanField('Did you research the product before purchasing it?')
+    was_researched = models.BooleanField('Did you research the product before purchasing it?', 
+                                         choices = BOOL_CHOICES, default = True)
     # optional field
     feedback = models.CharField('Would you like to provide any other feedback?',
                                 max_length = 500, blank = True, default = '')
