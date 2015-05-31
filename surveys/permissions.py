@@ -1,6 +1,7 @@
 from rest_framework import permissions
 
 
+# TODO: Allow creation of survey for any requestor
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
     Custom permission to only allow owners of an object to edit it.

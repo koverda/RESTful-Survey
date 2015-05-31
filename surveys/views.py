@@ -11,6 +11,7 @@ from django import forms # needed for radio button
 
 # radio button code for y/n question
 # usually better to have this in it's own forms.py file
+# TODO: figure out how to get rid of '---' option in form
 class BoolForm(forms.ModelForm):
     class Meta:
         model = Survey
@@ -21,16 +22,20 @@ class BoolForm(forms.ModelForm):
 
 class SurveyViewSet(viewsets.ModelViewSet):
     """
-    This endpoint presents code snippets.
+    This endpoint presents surveys.
 
-    The `highlight` field presents a hyperlink to the hightlighted HTML
-    representation of the code snippet.
 
-    The **owner** of the code snippet may update or delete instances
-    of the code snippet.
+    The **recommend_company** field asks how strongly they would 
+    recommend this company to a friend, from 1 to 10.
 
-    Try it yourself by logging in as one of these four users: **amy**, **max**,
-    **jose** or **aziz**.  The passwords are the same as the usernames.
+    The **what_changes** field asks the user what changes they would
+    make to the product, free-form text.
+
+    The **was_researched** field asks the user whether or not they
+    researched the product before purchasing, yes or no.
+
+    The **feedback** field asks the user for any additional feedback.
+    This field is optional.
     """
     queryset = Survey.objects.all()
     serializer_class = SurveySerializer
@@ -49,7 +54,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This endpoint presents the users in the system.
 
-    As you can see, the collection of snippet instances owned by a user are
+    As you can see, the collection of survey instances owned by a user are
     serialized using a hyperlinked representation.
     """
     queryset = User.objects.all()
