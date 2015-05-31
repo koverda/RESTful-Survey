@@ -4,12 +4,12 @@ from rest_framework import renderers
 from rest_framework import viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
-from snippets.models import Snippet
-from snippets.permissions import IsOwnerOrReadOnly
-from snippets.serializers import SnippetSerializer, UserSerializer
+from surveys.models import Survey
+from surveys.permissions import IsOwnerOrReadOnly
+from surveys.serializers import SurveySerializer, UserSerializer
 
 
-class SnippetViewSet(viewsets.ModelViewSet):
+class SurveyViewSet(viewsets.ModelViewSet):
     """
     This endpoint presents code snippets.
 
@@ -22,15 +22,15 @@ class SnippetViewSet(viewsets.ModelViewSet):
     Try it yourself by logging in as one of these four users: **amy**, **max**,
     **jose** or **aziz**.  The passwords are the same as the usernames.
     """
-    queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
+    queryset = Survey.objects.all()
+    serializer_class = SurveySerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,)
 
     @detail_route(renderer_classes=(renderers.StaticHTMLRenderer,))
     def highlight(self, request, *args, **kwargs):
-        snippet = self.get_object()
-        return Response(snippet.highlighted)
+        survey = self.get_object()
+        return Response(survey.highlighted)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
