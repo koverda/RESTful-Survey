@@ -154,6 +154,10 @@ LOGGING = {
 
 REST_FRAMEWORK = {
     'PAGINATE_BY': 25,
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    )
 }
 
 import os

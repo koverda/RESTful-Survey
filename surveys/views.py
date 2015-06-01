@@ -9,16 +9,6 @@ from surveys.permissions import IsOwnerOrReadOnly
 from surveys.serializers import SurveySerializer, UserSerializer
 from django import forms # needed for radio button
 
-# radio button code for y/n question
-# usually better to have this in it's own forms.py file
-# TODO: figure out how to get rid of '---' option in form
-class BoolForm(forms.ModelForm):
-    class Meta:
-        model = Survey
-        widgets = {
-            'was_researched': forms.RadioSelect
-        }
-
 
 class SurveyViewSet(viewsets.ModelViewSet):
     """
@@ -39,13 +29,9 @@ class SurveyViewSet(viewsets.ModelViewSet):
     """
     queryset = Survey.objects.all()
     serializer_class = SurveySerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly,)
+    permission_classes = (IsOwnerOrReadOnly, 
+                          permissions.IsAuthenticatedOrReadOnly,)
 
-    @detail_route(renderer_classes=(renderers.StaticHTMLRenderer,))
-    def highlight(self, request, *args, **kwargs):
-        survey = self.get_object()
-        return Response(survey.highlighted)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
